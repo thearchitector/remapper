@@ -38,12 +38,41 @@ class Destination:
     c: int
 
 
-dest = remap(Source(1, 2, 3), Destination)
->> Destination(1, 2, 3)
+dest = remap(Source(a=1, b=2, c=3), Destination)
+# >> Destination(a=1, b=2, c=3)
 ```
 
-A more useful example would be a mapping between a database model and a dataclass:
+A more useful example would be a mapping an internal database model to an externally-facing dataclass:
+
+```python
+from dataclasses import dataclass
+
+from remap import remap
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass
+
+class Base(DeclarativeBase, MappedAsDataclass):
+    pass
+
+class Source(Base):
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
+
+    a: Mapped[int]
+    b: Mapped[int]
+    c: Mapped[int]
+
+@dataclass
+class Destination:
+    a: int
+    b: int
+    c: int
+
+source = Source(a=1, b=2, c=3)
+await session.commit(source)
+
+dest = remap(source, Destination)
+# >> Destination(a=1, b=2, c=3)
+```
 
 ## License
 
-This software is licensed under the [BSD 3-Clause License](LICENSE).
+This software is licensed under the [BSD 3-Clause Clear License](LICENSE).

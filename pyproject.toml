@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Transform objects to and from similar structural mappings."
 authors = [{ name = "Elias Gabriel", email = "me@eliasfgabriel.com" }]
 readme = "README.md"
-license = { text = "BSD-3-Clause-Clear" }
+license = "BSD-3-Clause-Clear"
+license-files = ["LICENSE"]
 requires-python = ">=3.8"
 dependencies = []
 
