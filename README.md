@@ -1,8 +1,8 @@
-# remap
+# remapper
 
-![GitHub Workflow Status](https://raster.shields.io/github/actions/workflow/status/thearchitector/remap/test.yaml?label=tests&style=flat-square)
-![PyPI - Downloads](https://raster.shields.io/pypi/dm/remap?style=flat-square)
-![GitHub](https://raster.shields.io/github/license/thearchitector/remap?style=flat-square)
+![GitHub Workflow Status](https://raster.shields.io/github/actions/workflow/status/thearchitector/remapper/test.yaml?label=tests&style=flat-square)
+![PyPI - Downloads](https://raster.shields.io/pypi/dm/remapper?style=flat-square)
+![GitHub](https://raster.shields.io/github/license/thearchitector/remapper?style=flat-square)
 
 Transform objects to and from similar structural mappings. Useful for translating between sources of truth and presentational models of data.
 
@@ -11,9 +11,9 @@ Supports Python 3.8+. No dependencies.
 ## Installation
 
 ```sh
-$ pdm add remap
+$ pdm add remapper
 # or
-$ python -m pip install --user remap
+$ python -m pip install --user remapper
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ A trivial example for `remap` is converting one dataclass into another without h
 ```python
 from dataclasses import dataclass
 
-from remap import remap
+from remapper import remap
 
 @dataclass
 class Source:
@@ -47,7 +47,7 @@ A more useful example would be a mapping an internal database model to an extern
 ```python
 from dataclasses import dataclass
 
-from remap import remap
+from remapper import remap
 from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass
 
 class Base(DeclarativeBase, MappedAsDataclass):

@@ -4,8 +4,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from remap import remap
-from remap.remap import _get_specifiable_attributes
+from remapper import remap
+from remapper.remap import _get_specifiable_attributes
 
 
 @dataclass
