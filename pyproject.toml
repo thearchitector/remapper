@@ -6,8 +6,28 @@ authors = [{ name = "Elias Gabriel", email = "me@eliasfgabriel.com" }]
 readme = "README.md"
 license = "BSD-3-Clause-Clear"
 license-files = ["LICENSE"]
+keywords = ["mapping", "dataclass", "presentation", "models", "util"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
 requires-python = ">=3.8"
 dependencies = []
+
+[project.urls]
+homepage = "https://github.com/thearchitector/remapper"
+source = "https://github.com/thearchitector/remapper"
+changelog = "https://github.com/thearchitector/remapper/releases"
+issues = "https://github.com/thearchitector/remapper/issues"
 
 [dependency-groups]
 dev = ["pytest>=8.3.4"]
