@@ -1,8 +1,8 @@
 # remapper
 
-![GitHub Workflow Status](https://raster.shields.io/github/actions/workflow/status/thearchitector/remapper/test.yaml?label=tests&style=flat-square)
-![PyPI - Downloads](https://raster.shields.io/pypi/dm/remapper?style=flat-square)
-![GitHub](https://raster.shields.io/github/license/thearchitector/remapper?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thearchitector/remapper/test.yaml?label=tests&style=flat-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/remapper?style=flat-square)
+![GitHub](https://img.shields.io/github/license/thearchitector/remapper?style=flat-square)
 
 Transform objects to and from similar structural mappings. Useful for translating between sources of truth and presentational models of data.
 
@@ -18,6 +18,8 @@ $ python -m pip install --user remapper
 
 ## Usage
 
+> The examples below use dataclasses because they're easy, but `remap` works with any destination type that exposes attributes via its `__init__`.
+
 A trivial example for `remap` is converting one dataclass into another without having to manually pass attributes:
 
 ```python
@@ -25,11 +27,13 @@ from dataclasses import dataclass
 
 from remapper import remap
 
+
 @dataclass
 class Source:
     a: int
     b: int
     c: int
+
 
 @dataclass
 class Destination:
@@ -48,10 +52,12 @@ A more useful example would be in mapping an internal database model to an exter
 from dataclasses import dataclass
 
 from remapper import remap
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column
+
 
 class Base(DeclarativeBase, MappedAsDataclass):
     pass
+
 
 class Source(Base):
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
@@ -59,6 +65,7 @@ class Source(Base):
     a: Mapped[int]
     b: Mapped[int]
     c: Mapped[int]
+
 
 @dataclass
 class Destination:
@@ -88,10 +95,12 @@ from dataclasses import dataclass
 
 from remapper import remap
 
+
 @dataclass
 class Source:
     a: int
     b: int
+
 
 @dataclass
 class Destination:
@@ -113,10 +122,12 @@ from dataclasses import dataclass
 
 from remapper import remap
 
+
 @dataclass
 class Source:
     a: int
     b: int
+
 
 @dataclass
 class Destination:
@@ -138,26 +149,31 @@ from dataclasses import dataclass
 
 from remapper import remap
 
+
 @dataclass
 class Source:
     b: int
 
+
 @dataclass
 class Destination:
     b: int
+
 
 @dataclass
 class ParentSource:
     a: int
     child: Source
 
+
 @dataclass
 class ParentDestination:
+    a: int
     child: Destination
 
 
 ## this works but is kind of clunky
-source = ParentSource(child=Source(b=1))
+source = ParentSource(a=1, child=Source(b=1))
 dest_child = remap(source.child, Destination)
 dest = remap(source, ParentDestination, overrides={"child": dest_child})
 # >> ParentDestination(a=1,child=Destination(b=1))

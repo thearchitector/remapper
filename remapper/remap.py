@@ -1,12 +1,12 @@
 import inspect
 from functools import lru_cache
-from typing import TYPE_CHECKING, Mapping
+from typing import TYPE_CHECKING, Hashable, Mapping
 
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict, Set, Type, TypeVar
 
-    T = TypeVar("T", bound=object)
-    N = TypeVar("N", bound=object)
+    T = TypeVar("T", bound=Hashable)
+    N = TypeVar("N", bound=Hashable)
 
 
 _UNSET: object = object()

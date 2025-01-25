@@ -30,7 +30,7 @@ changelog = "https://github.com/thearchitector/remapper/releases"
 issues = "https://github.com/thearchitector/remapper/issues"
 
 [dependency-groups]
-dev = ["pytest>=8.3.4"]
+dev = ["pytest>=8.3.4", "mypy>=1.14.1"]
 
 [tool.pytest.ini_options]
 addopts = '-ra -vv'
@@ -38,6 +38,9 @@ testpaths = ["tests"]
 
 [tool.mypy]
 strict = true
+
+[tool.ruff.format]
+docstring-code-format = true
 
 [tool.ruff.lint]
 extend-select = ["B", "I"]
