@@ -42,7 +42,7 @@ dest = remap(Source(a=1, b=2, c=3), Destination)
 # >> Destination(a=1, b=2, c=3)
 ```
 
-A more useful example would be a mapping an internal database model to an externally-facing dataclass:
+A more useful example would be in mapping an internal database model to an externally-facing dataclass:
 
 ```python
 from dataclasses import dataclass
@@ -66,11 +66,109 @@ class Destination:
     b: int
     c: int
 
+    @property
+    def d(self) -> int:
+        return self.a + self.b + self.c
+
+
 source = Source(a=1, b=2, c=3)
 await session.commit(source)
 
 dest = remap(source, Destination)
+dest.d
+# >> 6
+```
+
+### Overrides
+
+There's a non-zero chance that a destination may require more data than available on a source. In those cases, you can manually provide values via the `overrides` keyword argument. Values in `overrides` will take precedence over values on the source:
+
+```python
+from dataclasses import dataclass
+
+from remapper import remap
+
+@dataclass
+class Source:
+    a: int
+    b: int
+
+@dataclass
+class Destination:
+    a: int
+    b: int
+    c: int
+
+
+dest = remap(Source(a=1, b=2), Destination, overrides={"b": 0, "c": 3})
+# >> Destination(a=1, b=0, c=3)
+```
+
+### Defaults
+
+If a destination defines more attributes than available on a source, but the destination has default values for those additional attributes, you don't need to supply overrides:
+
+```python
+from dataclasses import dataclass
+
+from remapper import remap
+
+@dataclass
+class Source:
+    a: int
+    b: int
+
+@dataclass
+class Destination:
+    a: int
+    b: int
+    c: int = 3
+
+
+dest = remap(Source(a=1, b=2), Destination)
 # >> Destination(a=1, b=2, c=3)
+```
+
+### Nested Types
+
+Some complex sources may have attributes that themselves need to be converted. Rather than remapping in several steps, you can use the `nested_types` keyword argument to specify inner types of the destination attributes:
+
+```python
+from dataclasses import dataclass
+
+from remapper import remap
+
+@dataclass
+class Source:
+    b: int
+
+@dataclass
+class Destination:
+    b: int
+
+@dataclass
+class ParentSource:
+    a: int
+    child: Source
+
+@dataclass
+class ParentDestination:
+    child: Destination
+
+
+## this works but is kind of clunky
+source = ParentSource(child=Source(b=1))
+dest_child = remap(source.child, Destination)
+dest = remap(source, ParentDestination, overrides={"child": dest_child})
+# >> ParentDestination(a=1,child=Destination(b=1))
+
+## so use this instead
+dest = remap(
+    ParentSource(a=1, child=Source(b=1)),
+    ParentDestination,
+    nested_types={"child": Destination},
+)
+# >> ParentDestination(a=1,child=Destination(b=1))
 ```
 
 ## License
