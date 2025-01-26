@@ -1,12 +1,12 @@
 import inspect
 from functools import lru_cache
-from typing import TYPE_CHECKING, Hashable, Mapping
+from typing import TYPE_CHECKING, Mapping
 
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Dict, Set, Type, TypeVar
 
-    T = TypeVar("T", bound=Hashable)
-    N = TypeVar("N", bound=Hashable)
+    T = TypeVar("T", bound=object)
+    N = TypeVar("N", bound=object)
 
 
 _UNSET: object = object()
@@ -66,7 +66,7 @@ def remap(
         ),
         **overrides,
     }
-    writable_attrs: "Dict[str, bool]" = _get_specifiable_attributes(dest_type)
+    writable_attrs: "Dict[str, bool]" = _get_specifiable_attributes(dest_type)  # type: ignore[arg-type]
 
     # all the attributes required by the destination that don't have default values
     # and are not available on the source
