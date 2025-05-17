@@ -1,6 +1,6 @@
 [project]
 name = "remapper"
-version = "1.0.0.post0"
+version = "1.0.1"
 description = "Transform objects to and from similar structural mappings."
 authors = [{ name = "Elias Gabriel", email = "oss@eliasfgabriel.com" }]
 readme = "README.md"
