@@ -30,7 +30,10 @@ changelog = "https://github.com/thearchitector/remapper/releases"
 issues = "https://github.com/thearchitector/remapper/issues"
 
 [dependency-groups]
-dev = ["pytest>=8.3.4", "mypy>=1.14.1"]
+dev = [
+    "pytest>=8.3.5",
+    "mypy>=1.14.1",
+]
 
 [tool.pytest.ini_options]
 addopts = '-ra -vv'
