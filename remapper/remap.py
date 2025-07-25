@@ -35,11 +35,7 @@ def _get_specifiable_attributes(cls: "Type[T]") -> "Dict[str, bool]":
     """
     init_signature = inspect.signature(cls)
     parameters = init_signature.parameters.values()
-    return {
-        param.name: param.default is not param.empty
-        for param in parameters
-        if param.name != "self"
-    }
+    return {param.name: param.default is not param.empty for param in parameters}
 
 
 def remap(
