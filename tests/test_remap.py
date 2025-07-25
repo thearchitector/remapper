@@ -52,7 +52,7 @@ def test_get_attributes(monkeypatch):
     monkeypatch.setattr("inspect.signature", mock)
     assert _get_specifiable_attributes(OptionalDestination) == {"a": False, "d": True}
     assert _get_specifiable_attributes(OptionalDestination) == {"a": False, "d": True}
-    mock.assert_called_once_with(OptionalDestination.__init__)
+    mock.assert_called_once_with(OptionalDestination)
 
 
 def test_remap():

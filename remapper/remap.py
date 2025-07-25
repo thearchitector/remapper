@@ -33,8 +33,7 @@ def _get_specifiable_attributes(cls: "Type[T]") -> "Dict[str, bool]":
     class. Each attribute is mapped to a boolean indicating if it is optional;
     Optionality means the attribute has a default value.
     """
-    init = cls.__init__
-    init_signature = inspect.signature(init)
+    init_signature = inspect.signature(cls)
     parameters = init_signature.parameters.values()
     return {
         param.name: param.default is not param.empty
